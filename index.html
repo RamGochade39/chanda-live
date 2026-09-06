@@ -42,6 +42,40 @@
   img{max-width:100%;display:block;}
   button{font-family:inherit;}
 
+  /* ===================== SITE TOP BAR ===================== */
+  .topbar{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 24px;
+    background:rgba(63,13,19,0.55);
+    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(253,248,238,0.1);
+  }
+  .topbar-brand{
+    display:flex; align-items:center; gap:10px;
+    text-decoration:none; color:var(--cream-50);
+    font-weight:800; font-size:14px; letter-spacing:0.08em;
+  }
+  .topbar-brand img{ width:30px; height:30px; border-radius:9px; object-fit:cover; }
+  .topbar-nav{ display:flex; gap:26px; }
+  .topbar-nav a{
+    color:rgba(253,248,238,0.75); text-decoration:none;
+    font-size:13.5px; font-weight:600;
+    transition:color 0.2s ease;
+  }
+  .topbar-nav a:hover{ color:var(--cream-50); }
+  .topbar-cta{
+    display:flex; align-items:center; gap:6px;
+    padding:8px 16px; border-radius:var(--radius-pill);
+    background:var(--saffron-500); color:var(--maroon-950);
+    font-size:12.5px; font-weight:800; text-decoration:none;
+    white-space:nowrap;
+  }
+  .topbar-cta:hover{ background:var(--saffron-400); }
+  @media (max-width:720px){
+    .topbar-nav{ display:none; }
+  }
+
   /* ===================== SECTION 1 — COUNTDOWN / REVEAL ===================== */
   .stage{
     position:relative;
@@ -700,6 +734,18 @@
 </style>
 </head>
 <body>
+
+  <header class="topbar">
+    <a href="#stage" class="topbar-brand">
+      <img src="assets/ganesh-icon.png" alt="Chanda" />
+      <span>CHANDA</span>
+    </a>
+    <nav class="topbar-nav">
+      <a href="#showcase">Dashboard</a>
+      <a href="#txn">Collect</a>
+    </nav>
+    <a class="topbar-cta" href="https://chanda.core3innovation.org/" target="_blank" rel="noopener">Visit Live Site</a>
+  </header>
 
   <!-- ===================== 1. COUNTDOWN / REVEAL ===================== -->
   <section class="stage" id="stage">
