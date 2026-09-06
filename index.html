@@ -800,7 +800,7 @@
       <div class="countdown-wrap">
         <p class="countdown-caption">Chanda goes live in</p>
         <div class="countdown-digits" id="countdown">
-          00<span class="colon">:</span>00<span class="colon">:</span><span id="secs">10</span><span class="unit">sec</span>
+          00<span class="colon">:</span>00<span class="colon">:</span><span id="secs">05</span><span class="unit">sec</span>
         </div>
       </div>
 
@@ -1039,7 +1039,7 @@
 
   function runCountdown(){
     stage.classList.remove('revealed');
-    var n = 10;
+    var n = 5;
     secsEl.textContent = String(n).padStart(2,'0');
     if (reduced) { stage.classList.add('revealed'); return; }
     clearInterval(countdownTimer);
