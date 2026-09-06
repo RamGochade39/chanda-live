@@ -1096,6 +1096,31 @@
   window.addEventListener('scroll', updateTopbar, { passive:true });
   updateTopbar();
 
+  // One-time mega blast: reuses the existing .confetti animation/CSS,
+  // just floods it with thousands of pieces instead of the hand-placed 34.
+  function spawnMegaConfetti(count){
+    var colors = ['#e63946','#3a6ea5','#2a9d55','#7c4dff','#f2994a','#ef476f','#fdf8ee'];
+    var shapes = ['', 'sq', 'bar'];
+    var frag = document.createDocumentFragment();
+    for (var i = 0; i < count; i++) {
+      var s = document.createElement('span');
+      s.className = ('confetti ' + shapes[Math.floor(Math.random() * shapes.length)]).trim();
+      s.setAttribute('aria-hidden', 'true');
+      s.dataset.mega = '1';
+      var dx = ((Math.random() * 2 - 1) * 60).toFixed(1) + 'vw';
+      var dy = ((Math.random() * 2 - 1) * 55).toFixed(1) + 'vh';
+      var rot = Math.round((Math.random() * 2 - 1) * 420) + 'deg';
+      var cd = (Math.random() * 0.4).toFixed(2) + 's';
+      var color = colors[Math.floor(Math.random() * colors.length)];
+      s.style.cssText = '--dx:' + dx + ';--dy:' + dy + ';--rot:' + rot + ';--cd:' + cd + ';background:' + color + ';';
+      frag.appendChild(s);
+    }
+    stage.appendChild(frag);
+    setTimeout(function(){
+      stage.querySelectorAll('.confetti[data-mega]').forEach(function(el){ el.remove(); });
+    }, 2300);
+  }
+
   function runCountdown(){
     stage.classList.remove('revealed');
     var n = 5;
@@ -1107,6 +1132,7 @@
       if (n < 0) {
         clearInterval(countdownTimer);
         stage.classList.add('revealed');
+        spawnMegaConfetti(10000);
         return;
       }
       secsEl.textContent = String(n).padStart(2,'0');
