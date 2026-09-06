@@ -50,6 +50,15 @@
     background:rgba(63,13,19,0.55);
     backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
     border-bottom:1px solid rgba(253,248,238,0.1);
+    opacity:0;
+    transform:translateY(-100%);
+    pointer-events:none;
+    transition:opacity 0.3s ease, transform 0.3s ease;
+  }
+  .topbar.visible{
+    opacity:1;
+    transform:translateY(0);
+    pointer-events:auto;
   }
   .topbar-brand{
     display:flex; align-items:center; gap:10px;
@@ -1009,7 +1018,14 @@
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var stage = document.getElementById('stage');
   var secsEl = document.getElementById('secs');
+  var topbar = document.querySelector('.topbar');
   var countdownTimer = null, txnTimers = [];
+
+  function updateTopbar(){
+    topbar.classList.toggle('visible', window.scrollY > stage.offsetHeight - 80);
+  }
+  window.addEventListener('scroll', updateTopbar, { passive:true });
+  updateTopbar();
 
   function runCountdown(){
     stage.classList.remove('revealed');
