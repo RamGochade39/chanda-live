@@ -430,6 +430,22 @@
 
   .phone-body{ margin-top:-28px; padding:0 16px 16px; position:relative; z-index:3; }
 
+  .phone-nav{
+    position:absolute; left:0; right:0; bottom:0;
+    display:flex; justify-content:space-around; align-items:center;
+    padding:10px 8px 14px;
+    background:rgba(253,248,238,0.97);
+    border-top:1px solid rgba(63,13,19,0.08);
+    z-index:4;
+  }
+  .phone-nav .nav-item{
+    display:flex; flex-direction:column; align-items:center; gap:3px;
+    font-size:9px; font-weight:700;
+    color:rgba(42,22,16,0.38);
+  }
+  .phone-nav .nav-item svg{ width:18px; height:18px; }
+  .phone-nav .nav-item.active{ color:var(--maroon-700); }
+
   .stat-cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
   .stat-card{
     background:#fff; border-radius:16px; padding:10px 6px;
@@ -842,6 +858,25 @@
                   <div class="activity-text"><div class="n">Vikram Deshmukh</div><div class="m">by Sunil · 41m ago</div></div>
                 </div>
                 <div class="activity-amt in">+₹1,100</div>
+              </div>
+            </div>
+
+            <div class="phone-nav">
+              <div class="nav-item active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/></svg>
+                <span>Home</span>
+              </div>
+              <div class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
+                <span>Collect</span>
+              </div>
+              <div class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M12 20V4M20 20v-7"/></svg>
+                <span>Reports</span>
+              </div>
+              <div class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+                <span>Profile</span>
               </div>
             </div>
           </div>
