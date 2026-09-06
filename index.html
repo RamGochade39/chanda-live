@@ -91,23 +91,23 @@
      out from one center point - a full sky of it, not just a single pop. */
   .confetti{
     position:absolute;
-    width:4px; height:4px;
-    border-radius:1px;
+    width:7px; height:7px;
+    border-radius:50%;
     opacity:0;
     pointer-events:none;
     z-index:7;
     transform:scale(0.4) rotate(0deg);
   }
   .stage.revealed .confetti{
-    animation:confetti-twinkle 1.8s cubic-bezier(0.25,0.1,0.3,1) forwards;
+    animation:confetti-twinkle 2.2s cubic-bezier(0.25,0.1,0.3,1) forwards;
     animation-delay:var(--cd, 0s);
   }
   @keyframes confetti-twinkle{
     0%{ opacity:0; transform:translate(0,0) scale(0.5) rotate(0deg); }
-    10%{ opacity:1; transform:translate(0,0) scale(1) rotate(45deg); }
-    55%{ opacity:1; transform:translate(var(--dx, 0px), var(--dy)) scale(1) rotate(var(--rot)); }
+    8%{ opacity:1; transform:translate(0,0) scale(1.3) rotate(45deg); }
+    55%{ opacity:1; transform:translate(var(--dx, 0px), calc(var(--dy) * 1.4)) scale(1) rotate(var(--rot)); }
     85%{ opacity:1; }
-    100%{ opacity:0; transform:translate(var(--dx, 0px), var(--dy2)) scale(0.85) rotate(calc(var(--rot) * 1.4)); }
+    100%{ opacity:0; transform:translate(var(--dx, 0px), calc(var(--dy2) * 1.7)) scale(0.85) rotate(calc(var(--rot) * 1.4)); }
   }
 
   .spark{
@@ -784,9 +784,11 @@
         <h2>Every collection, on one dashboard.</h2>
         <p>Cash, UPI, today's total, who collected what. The volunteer who used to carry a vahi in their pocket now carries a phone.</p>
         <div class="stat-row">
-          <div class="stat"><div class="num">3</div><div class="label">Active Mandals</div></div>
-          <div class="stat"><div class="num">42</div><div class="label">Volunteers</div></div>
-          <div class="stat"><div class="num">5</div><div class="label">Roles, one app</div></div>
+          <div class="stat"><div class="num" data-target="3">0</div><div class="label">Active Mandals</div></div>
+          <div class="stat"><div class="num" data-target="42">0</div><div class="label">Volunteers</div></div>
+          <div class="stat"><div class="num" data-target="5">0</div><div class="label">Roles, one app</div></div>
+          <div class="stat"><div class="num" data-target="1200" data-suffix="+">0</div><div class="label">Collections logged</div></div>
+          <div class="stat"><div class="num" data-target="100" data-suffix="%">0</div><div class="label">Paperless</div></div>
         </div>
       </div>
       <div class="phone-col">
@@ -1045,6 +1047,36 @@
     });
   }, { threshold: 0.5 });
   txnObserver.observe(document.getElementById('txn'));
+
+  /* Stat counters: 0 -> target whenever the stat row scrolls into view */
+  function animateStatCount(el, duration){
+    var target = parseInt(el.getAttribute('data-target'), 10);
+    var suffix = el.getAttribute('data-suffix') || '';
+    if (reduced) { el.textContent = target.toLocaleString('en-IN') + suffix; return; }
+    var start = performance.now();
+    function step(now){
+      var p = Math.min(1, (now - start) / duration);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * eased).toLocaleString('en-IN') + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  var statNums = document.querySelectorAll('.stat .num[data-target]');
+  var statRow = document.querySelector('.stat-row');
+  if (statRow) {
+    var statObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (!e.isIntersecting) return;
+        statNums.forEach(function(el, i){
+          el.textContent = '0';
+          setTimeout(function(){ animateStatCount(el, 1300); }, i * 120);
+        });
+      });
+    }, { threshold: 0.5 });
+    statObserver.observe(statRow);
+  }
 
   /* Auto-scroll showreel: hands-free playthrough for filming.
      Countdown (0-6s) -> curtain opens + confetti cheer, held on screen
