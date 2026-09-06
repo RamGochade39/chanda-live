@@ -292,14 +292,17 @@
     opacity:0;
     overflow:auto;
     pointer-events:none;
-    transition:opacity 0.9s cubic-bezier(0.16,1,0.3,1);
+    transition:opacity 0.4s ease;
   }
   .stage.revealed .countdown-wrap{
     opacity:0;
     transform:translateY(-18px) scale(0.96);
     pointer-events:none;
   }
-  .stage.revealed .reveal-block{
+  /* Reveal-block only fades in once the curtain's own 1.1s slide has had
+     its unobstructed moment - .reveal-content is added by JS after that,
+     instead of racing the curtain via .revealed on its own. */
+  .stage.reveal-content .reveal-block{
     opacity:1;
     pointer-events:auto;
   }
@@ -1122,16 +1125,20 @@
   }
 
   function runCountdown(){
-    stage.classList.remove('revealed');
+    stage.classList.remove('revealed', 'reveal-content');
     var n = 5;
     secsEl.textContent = String(n).padStart(2,'0');
-    if (reduced) { stage.classList.add('revealed'); return; }
+    if (reduced) { stage.classList.add('revealed', 'reveal-content'); return; }
     clearInterval(countdownTimer);
     countdownTimer = setInterval(function(){
       n -= 1;
       if (n < 0) {
         clearInterval(countdownTimer);
         stage.classList.add('revealed');
+        // Let the curtain slide open on its own first - the real content
+        // only fades in once that's had its unobstructed moment, instead
+        // of both racing to cover the screen at the same time.
+        setTimeout(function(){ stage.classList.add('reveal-content'); }, 950);
         // Wait until the curtain's 1.1s slide has fully finished before
         // doing the heavy confetti DOM insert, so it can't compete with
         // the curtain's transition for frames.
