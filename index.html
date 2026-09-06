@@ -42,14 +42,13 @@
   img{max-width:100%;display:block;}
   button{font-family:inherit;}
 
-  /* ===================== SITE TOP BAR ===================== */
+  /* ===================== SITE TOP BAR =====================
+     Same pill-nav look as the real site's .site-nav (ported from landing),
+     just fixed + floating so it persists once you scroll past the hero. */
   .topbar{
     position:fixed; top:0; left:0; right:0; z-index:50;
-    display:flex; align-items:center; justify-content:space-between;
-    padding:14px 24px;
-    background:rgba(63,13,19,0.55);
-    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
-    border-bottom:1px solid rgba(253,248,238,0.1);
+    display:flex; justify-content:center;
+    padding:14px 16px;
     opacity:0;
     transform:translateY(-100%);
     pointer-events:none;
@@ -60,29 +59,39 @@
     transform:translateY(0);
     pointer-events:auto;
   }
+  .topbar-nav{
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    width:min(1180px,100%);
+    min-height:62px; border-radius:999px; border:1px solid #d9cdbb;
+    background:rgba(255,253,248,0.92);
+    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+    padding:0 10px 0 18px;
+    box-shadow:0 12px 32px rgba(59,37,25,0.16);
+  }
   .topbar-brand{
     display:flex; align-items:center; gap:10px;
-    text-decoration:none; color:var(--cream-50);
-    font-weight:800; font-size:14px; letter-spacing:0.08em;
+    text-decoration:none;
+    font-family:'Noto Serif',Georgia,serif; font-size:19px; font-weight:800;
+    color:#5f1019; text-transform:uppercase; letter-spacing:0.03em;
   }
-  .topbar-brand img{ width:30px; height:30px; border-radius:9px; object-fit:cover; }
-  .topbar-nav{ display:flex; gap:26px; }
-  .topbar-nav a{
-    color:rgba(253,248,238,0.75); text-decoration:none;
-    font-size:13.5px; font-weight:600;
-    transition:color 0.2s ease;
+  .topbar-brand img{ width:34px; height:34px; border-radius:50%; object-fit:cover; }
+  .topbar-links{ display:flex; align-items:center; gap:10px; color:#6b6258; font-size:14px; font-weight:600; }
+  .topbar-links .pipe{ color:#d9cdbb; }
+  .topbar-actions{ display:flex; align-items:center; gap:8px; }
+  .topbar-lang{
+    display:inline-flex; align-items:center; gap:5px; min-height:40px;
+    border-radius:999px; border:1px solid #d9cdbb; padding:0 14px;
+    font-size:13px; color:#6b6258;
   }
-  .topbar-nav a:hover{ color:var(--cream-50); }
+  .topbar-lang b{ font-weight:900; color:#5f1019; }
   .topbar-cta{
-    display:flex; align-items:center; gap:6px;
-    padding:8px 16px; border-radius:var(--radius-pill);
-    background:var(--saffron-500); color:var(--maroon-950);
-    font-size:12.5px; font-weight:800; text-decoration:none;
-    white-space:nowrap;
+    display:inline-flex; min-height:46px; align-items:center; justify-content:center; gap:8px;
+    border-radius:999px; border:1px solid #8c1f2b; background:#8c1f2b; color:#fff8ef;
+    padding:0 20px; font-weight:800; text-decoration:none; white-space:nowrap;
+    box-shadow:0 18px 38px rgba(140,31,43,0.22);
   }
-  .topbar-cta:hover{ background:var(--saffron-400); }
   @media (max-width:720px){
-    .topbar-nav{ display:none; }
+    .topbar-links{ display:none; }
   }
 
   /* ===================== SECTION 1 — COUNTDOWN / REVEAL ===================== */
@@ -778,15 +787,21 @@
 <body>
 
   <header class="topbar">
-    <a href="#stage" class="topbar-brand">
-      <img src="assets/ganesh-icon.png" alt="Chanda" />
-      <span>CHANDA</span>
-    </a>
-    <nav class="topbar-nav">
-      <a href="#showcase">Dashboard</a>
-      <a href="#txn">Collect</a>
-    </nav>
-    <a class="topbar-cta" href="https://chanda.core3innovation.org/" target="_blank" rel="noopener">Visit Live Site</a>
+    <div class="topbar-nav">
+      <a href="#stage" class="topbar-brand">
+        <img src="assets/chanda-logo.png" alt="" />Chanda
+      </a>
+      <div class="topbar-links">
+        <span>Product</span><span class="pipe">|</span>
+        <span>Screens</span><span class="pipe">|</span>
+        <span>Request Demo</span><span class="pipe">|</span>
+        <span>FAQ</span>
+      </div>
+      <div class="topbar-actions">
+        <span class="topbar-lang">EN <span>/</span> <b>मराठी</b></span>
+        <a class="topbar-cta" href="https://chanda.core3innovation.org/" target="_blank" rel="noopener">Login</a>
+      </div>
+    </div>
   </header>
 
   <!-- ===================== 1. COUNTDOWN / REVEAL ===================== -->
