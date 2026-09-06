@@ -358,6 +358,16 @@
     .stage{ padding:5rem 1.25rem 3rem; }
   }
 
+  /* Short laptop windows (13" screens, browser chrome eating into height)
+     - shrink the hero so nothing gets clipped by .stage's overflow:hidden. */
+  @media (max-height:700px) and (min-width:561px){
+    .stage{ padding:4.5rem 1.5rem 2rem; }
+    .brand-strip{ margin-bottom:1.5rem; }
+    .stage-inner{ min-height:200px; }
+    .countdown-digits{ font-size:clamp(48px, 11vw, 90px); }
+    .ribbon{ margin-top:1.5rem; }
+  }
+
   /* ===================== SECTION 2 — DASHBOARD SHOWCASE ===================== */
   .showcase{
     position:relative;
