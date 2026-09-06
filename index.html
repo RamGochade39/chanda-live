@@ -86,25 +86,28 @@
   .stage.revealed .curtain-left{ transform:translateX(-100%); }
   .stage.revealed .curtain-right{ transform:translateX(100%); }
 
-  /* Cheer burst: confetti pop the instant the curtain opens */
+  /* Cheer burst: confetti scattered across the whole stage (each piece
+     keeps its own left/top position, set inline) rather than radiating
+     out from one center point - a full sky of it, not just a single pop. */
   .confetti{
     position:absolute;
-    left:50%; top:46%;
-    width:9px; height:9px;
-    border-radius:2px;
+    width:4px; height:4px;
+    border-radius:1px;
     opacity:0;
     pointer-events:none;
     z-index:7;
-    transform:translate(-50%,-50%) scale(0.4);
+    transform:scale(0.4) rotate(0deg);
   }
   .stage.revealed .confetti{
-    animation:confetti-burst 1.15s cubic-bezier(0.16,1,0.3,1) forwards;
+    animation:confetti-twinkle 1.8s cubic-bezier(0.25,0.1,0.3,1) forwards;
     animation-delay:var(--cd, 0s);
   }
-  @keyframes confetti-burst{
-    0%{ opacity:0; transform:translate(-50%,-50%) scale(0.5) rotate(0deg); }
-    18%{ opacity:1; }
-    100%{ opacity:0; transform:translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1) rotate(var(--rot)); }
+  @keyframes confetti-twinkle{
+    0%{ opacity:0; transform:translate(0,0) scale(0.5) rotate(0deg); }
+    10%{ opacity:1; transform:translate(0,0) scale(1) rotate(45deg); }
+    55%{ opacity:1; transform:translate(var(--dx, 0px), var(--dy)) scale(1) rotate(var(--rot)); }
+    85%{ opacity:1; }
+    100%{ opacity:0; transform:translate(var(--dx, 0px), var(--dy2)) scale(0.85) rotate(calc(var(--rot) * 1.4)); }
   }
 
   .spark{
@@ -738,18 +741,40 @@
     <div class="curtain curtain-left" aria-hidden="true"></div>
     <div class="curtain curtain-right" aria-hidden="true"></div>
 
-    <span class="confetti" aria-hidden="true" style="--dx:-260px; --dy:-160px; --rot:180deg; --cd:0s; background:var(--saffron-400);"></span>
-    <span class="confetti" aria-hidden="true" style="--dx:220px; --dy:-190px; --rot:260deg; --cd:0.03s; background:var(--cream-50);"></span>
-    <span class="confetti" aria-hidden="true" style="--dx:-180px; --dy:120px; --rot:-140deg; --cd:0.06s; background:var(--saffron-600);"></span>
-    <span class="confetti" aria-hidden="true" style="--dx:280px; --dy:80px; --rot:200deg; --cd:0.02s; background:var(--saffron-400);"></span>
-    <span class="confetti" aria-hidden="true" style="--dx:-90px; --dy:-230px; --rot:90deg; --cd:0.08s; background:var(--cream-100);"></span>
-    <span class="confetti" aria-hidden="true" style="--dx:130px; --dy:210px; --rot:-220deg; --cd:0.05s; background:var(--saffron-500);"></span>
-    <span class="confetti" aria-hidden="true" style="--dx:-320px; --dy:10px; --rot:150deg; --cd:0.01s; background:var(--cream-50);"></span>
-    <span class="confetti" aria-hidden="true" style="--dx:60px; --dy:-260px; --rot:-180deg; --cd:0.09s; background:var(--saffron-600);"></span>
-    <span class="confetti" aria-hidden="true" style="--dx:320px; --dy:-40px; --rot:240deg; --cd:0.04s; background:var(--cream-100);"></span>
-    <span class="confetti" aria-hidden="true" style="--dx:-230px; --dy:200px; --rot:-260deg; --cd:0.07s; background:var(--saffron-400);"></span>
-    <span class="confetti" aria-hidden="true" style="--dx:10px; --dy:250px; --rot:120deg; --cd:0.02s; background:var(--saffron-500);"></span>
-    <span class="confetti" aria-hidden="true" style="--dx:190px; --dy:160px; --rot:-200deg; --cd:0.06s; background:var(--cream-50);"></span>
+    <span class="confetti" aria-hidden="true" style="left:4%; top:8%; --dy:14px; --dy2:110px; --rot:180deg; --cd:0.02s; background:var(--saffron-400);"></span>
+    <span class="confetti" aria-hidden="true" style="left:11%; top:22%; --dy:-10px; --dy2:90px; --rot:260deg; --cd:0.18s; background:var(--cream-50);"></span>
+    <span class="confetti" aria-hidden="true" style="left:18%; top:6%; --dy:20px; --dy2:150px; --rot:-140deg; --cd:0.09s; background:var(--saffron-600);"></span>
+    <span class="confetti" aria-hidden="true" style="left:24%; top:34%; --dy:-16px; --dy2:100px; --rot:200deg; --cd:0.31s; background:var(--saffron-400);"></span>
+    <span class="confetti" aria-hidden="true" style="left:8%; top:46%; --dy:12px; --dy2:180px; --rot:90deg; --cd:0.14s; background:var(--cream-100);"></span>
+    <span class="confetti" aria-hidden="true" style="left:31%; top:16%; --dy:-8px; --dy2:120px; --rot:-220deg; --cd:0.05s; background:var(--saffron-500);"></span>
+    <span class="confetti" aria-hidden="true" style="left:15%; top:60%; --dy:18px; --dy2:210px; --rot:150deg; --cd:0.24s; background:var(--cream-50);"></span>
+    <span class="confetti" aria-hidden="true" style="left:38%; top:8%; --dy:-14px; --dy2:95px; --rot:-180deg; --cd:0.11s; background:var(--saffron-600);"></span>
+    <span class="confetti" aria-hidden="true" style="left:44%; top:24%; --dy:10px; --dy2:160px; --rot:240deg; --cd:0.28s; background:var(--cream-100);"></span>
+    <span class="confetti" aria-hidden="true" style="left:52%; top:10%; --dy:-18px; --dy2:105px; --rot:-260deg; --cd:0.07s; background:var(--saffron-400);"></span>
+    <span class="confetti" aria-hidden="true" style="left:60%; top:20%; --dy:16px; --dy2:170px; --rot:120deg; --cd:0.21s; background:var(--saffron-500);"></span>
+    <span class="confetti" aria-hidden="true" style="left:67%; top:6%; --dy:-12px; --dy2:130px; --rot:-200deg; --cd:0.03s; background:var(--cream-50);"></span>
+    <span class="confetti" aria-hidden="true" style="left:73%; top:32%; --dy:20px; --dy2:190px; --rot:200deg; --cd:0.34s; background:var(--saffron-500);"></span>
+    <span class="confetti" aria-hidden="true" style="left:80%; top:14%; --dy:-10px; --dy2:110px; --rot:-160deg; --cd:0.16s; background:var(--cream-100);"></span>
+    <span class="confetti" aria-hidden="true" style="left:87%; top:26%; --dy:14px; --dy2:145px; --rot:170deg; --cd:0.06s; background:var(--saffron-600);"></span>
+    <span class="confetti" aria-hidden="true" style="left:93%; top:10%; --dy:-16px; --dy2:100px; --rot:-240deg; --cd:0.29s; background:var(--cream-50);"></span>
+    <span class="confetti" aria-hidden="true" style="left:96%; top:40%; --dy:22px; --dy2:220px; --rot:210deg; --cd:0.12s; background:var(--saffron-400);"></span>
+    <span class="confetti" aria-hidden="true" style="left:89%; top:54%; --dy:-14px; --dy2:130px; --rot:-190deg; --cd:0.02s; background:var(--saffron-500);"></span>
+    <span class="confetti" aria-hidden="true" style="left:83%; top:66%; --dy:18px; --dy2:200px; --rot:230deg; --cd:0.26s; background:var(--cream-100);"></span>
+    <span class="confetti" aria-hidden="true" style="left:76%; top:78%; --dy:-10px; --dy2:95px; --rot:-150deg; --cd:0.08s; background:var(--saffron-600);"></span>
+    <span class="confetti" aria-hidden="true" style="left:68%; top:88%; --dy:16px; --dy2:160px; --rot:190deg; --cd:0.33s; background:var(--saffron-400);"></span>
+    <span class="confetti" aria-hidden="true" style="left:58%; top:80%; --dy:-20px; --dy2:110px; --rot:-230deg; --cd:0.15s; background:var(--cream-50);"></span>
+    <span class="confetti" aria-hidden="true" style="left:50%; top:70%; --dy:12px; --dy2:180px; --rot:140deg; --cd:0.04s; background:var(--saffron-500);"></span>
+    <span class="confetti" aria-hidden="true" style="left:42%; top:82%; --dy:-18px; --dy2:120px; --rot:-170deg; --cd:0.22s; background:var(--saffron-600);"></span>
+    <span class="confetti" aria-hidden="true" style="left:34%; top:74%; --dy:14px; --dy2:200px; --rot:250deg; --cd:0.1s; background:var(--cream-100);"></span>
+    <span class="confetti" aria-hidden="true" style="left:26%; top:86%; --dy:-12px; --dy2:100px; --rot:-210deg; --cd:0.36s; background:var(--saffron-400);"></span>
+    <span class="confetti" aria-hidden="true" style="left:19%; top:76%; --dy:20px; --dy2:230px; --rot:200deg; --cd:0.19s; background:var(--saffron-500);"></span>
+    <span class="confetti" aria-hidden="true" style="left:6%; top:66%; --dy:-16px; --dy2:150px; --rot:-140deg; --cd:0.07s; background:var(--cream-50);"></span>
+    <span class="confetti" aria-hidden="true" style="left:47%; top:44%; --dy:10px; --dy2:135px; --rot:160deg; --cd:0.25s; background:var(--saffron-600);"></span>
+    <span class="confetti" aria-hidden="true" style="left:63%; top:52%; --dy:-14px; --dy2:145px; --rot:-220deg; --cd:0.13s; background:var(--cream-100);"></span>
+    <span class="confetti" aria-hidden="true" style="left:29%; top:50%; --dy:18px; --dy2:165px; --rot:220deg; --cd:0.01s; background:var(--saffron-400);"></span>
+    <span class="confetti" aria-hidden="true" style="left:71%; top:60%; --dy:-10px; --dy2:125px; --rot:-180deg; --cd:0.3s; background:var(--saffron-500);"></span>
+    <span class="confetti" aria-hidden="true" style="left:55%; top:36%; --dy:16px; --dy2:155px; --rot:150deg; --cd:0.17s; background:var(--cream-50);"></span>
+    <span class="confetti" aria-hidden="true" style="left:37%; top:58%; --dy:-20px; --dy2:175px; --rot:-260deg; --cd:0.05s; background:var(--saffron-600);"></span>
   </section>
 
   <!-- ===================== 2. DASHBOARD SHOWCASE ===================== -->
@@ -1022,8 +1047,9 @@
   txnObserver.observe(document.getElementById('txn'));
 
   /* Auto-scroll showreel: hands-free playthrough for filming.
-     Countdown (0-6s) -> reveal read (6-8.5s) -> full phone/dashboard (8.5-17s)
-     -> full collection flow (17-26.5s) -> closing (26.5-29.5s) -> loop.
+     Countdown (0-6s) -> curtain opens + confetti cheer, held on screen
+     (6-11s) -> full phone/dashboard (11-19.5s) -> full collection flow
+     (19.5-29s) -> closing (29-32s) -> loop.
      Dashboard and transaction scrolls center on the actual screen/card
      (not the section top) so the whole phone and the whole entry flow
      stay in frame instead of getting clipped by the viewport edge. */
@@ -1042,11 +1068,11 @@
 
     if (reduced) return;
 
-    showreelTimers.push(setTimeout(function(){ scrollToTarget('#showcase .phone', 'center'); }, 8500));
-    showreelTimers.push(setTimeout(function(){ scrollToTarget('#txn .txn-stage', 'center'); }, 17000));
-    showreelTimers.push(setTimeout(function(){ scrollToTarget('.closing', 'start'); }, 26500));
-    showreelTimers.push(setTimeout(function(){ scrollToTarget('#stage', 'start'); }, 29500));
-    showreelTimers.push(setTimeout(runShowreel, 30700));
+    showreelTimers.push(setTimeout(function(){ scrollToTarget('#showcase .phone', 'center'); }, 11000));
+    showreelTimers.push(setTimeout(function(){ scrollToTarget('#txn .txn-stage', 'center'); }, 19500));
+    showreelTimers.push(setTimeout(function(){ scrollToTarget('.closing', 'start'); }, 29000));
+    showreelTimers.push(setTimeout(function(){ scrollToTarget('#stage', 'start'); }, 32000));
+    showreelTimers.push(setTimeout(runShowreel, 33200));
   }
 
   document.getElementById('replayBtn').addEventListener('click', runShowreel);
